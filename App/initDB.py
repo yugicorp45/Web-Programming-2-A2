@@ -2,6 +2,7 @@ from main import db, app, Pokemon
 import csv
 
 db.create_all(app=app)
+
 pokemon_list = []
 p_name = ""
 atk = 0

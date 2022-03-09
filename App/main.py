@@ -28,27 +28,84 @@ app.app_context().push()
 
 # edit to query 50 pokemon objects and send to template
 #Delete all of this
-
+'''
 import csv
+
 pokemon_list = []
-
+p_name = ""
+atk = 0
+defen = 0
+hp_health = 0
+spatk = 0
+spdef = 0
+p_speed = 0
+weight = 1.0
+height = 1.0
+type_1 = ""
+type_2 = ""
 with open('/workspace/info2602a2/App/pokemon.csv','r') as csv_file:
-    csv_reader = csv.DictReader(csv_file)
+  csv_reader = csv.DictReader(csv_file)
 
-    for line in csv_reader:
-        pokemon_list.append(Pokemon(name = line['name'],attack = line['attack'], defense = line['defense'],
-        hp = line['hp'], height_m = line['height_m'], sp_attack = line['sp_attack'], sp_defense = line['sp_defense'],
-        speed = line['speed'], type1 = line['type1'], type2 = line['type2'], weight_kg = line['weight_kg']
-        ))
+  for line in csv_reader:
+    p_name = line['name']
+    if p_name == "":
+      p_name = None
 
-    
-for obj in pokemon_list:
-    if obj.type2 == "":
-        obj.type2 = "None"
+    atk = line['attack']
+    if atk =="":
+      atk = None
+        
+    defen = line['defense']
+    if defen == "":
+      defen = None
+
+    hp_health = line['hp']
+    if hp_health == "":
+      hp_health = None
+
+    spatk = line['sp_attack']
+    if spatk =="":
+      spatk = None
+        
+    spdef = line['sp_defense']
+    if spdef == "":
+      spdef = None
+
+    p_speed = line['speed']
+    if p_speed == "":
+      p_speed = None
+
+    type_1 = line['type1']
+    if type_1 =="":
+      type_1 = None
+        
+    defen = line['defense']
+    if defen == "":
+      defen = None
+
+
+    weight = line['weight_kg']
+    if weight == "":
+      weight = None
+
+    height = line['height_m']
+    if height =="":
+      height = None
+        
+    type_2 = line['type2']
+    if type_2 == "":
+      type_2 = None
+
+    pokemon_list.append(Pokemon(name = p_name, attack = atk, defense = defen,
+    hp = hp_health, height_m = height, sp_attack = spatk, sp_defense = spdef,
+    speed = p_speed, type1 = type_1, type2 = type_2, weight_kg = weight
+    ))
 poke = pokemon_list
+'''
 @app.route('/')
 def index():
-  return render_template('index.html',poke=poke) 
+  poke = Pokemon.query.filter_by
+  return render_template('index.html') 
 
 @app.route('/app')
 def client_app():
