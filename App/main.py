@@ -4,7 +4,8 @@ from flask_jwt import JWT, jwt_required, current_identity
 from sqlalchemy.exc import IntegrityError
 from datetime import timedelta 
 
-from models import db #, User, Pokemon, MyPokemon
+from models import db, User, Pokemon, MyPokemon
+
 
 ''' Begin boilerplate code '''
 def create_app():
@@ -19,7 +20,6 @@ def create_app():
 app = create_app()
 
 app.app_context().push()
-
 ''' End Boilerplate Code '''
 
 ''' Set up JWT here '''
@@ -27,9 +27,28 @@ app.app_context().push()
 ''' End JWT Setup '''
 
 # edit to query 50 pokemon objects and send to template
+#Delete all of this
+
+import csv
+pokemon_list = []
+
+with open('/workspace/info2602a2/App/pokemon.csv','r') as csv_file:
+    csv_reader = csv.DictReader(csv_file)
+
+    for line in csv_reader:
+        pokemon_list.append(Pokemon(name = line['name'],attack = line['attack'], defense = line['defense'],
+        hp = line['hp'], height_m = line['height_m'], sp_attack = line['sp_attack'], sp_defense = line['sp_defense'],
+        speed = line['speed'], type1 = line['type1'], type2 = line['type2'], weight_kg = line['weight_kg']
+        ))
+
+    
+for obj in pokemon_list:
+    if obj.type2 == "":
+        obj.type2 = "None"
+poke = pokemon_list
 @app.route('/')
 def index():
-  return render_template('index.html')
+  return render_template('index.html',poke=poke) 
 
 @app.route('/app')
 def client_app():
